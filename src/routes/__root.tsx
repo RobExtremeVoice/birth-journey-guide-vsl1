@@ -122,7 +122,7 @@ function RootComponent() {
     if (!document.querySelector('script[data-gtm="GTM-TKG2VFL6"]')) {
       const script = document.createElement("script");
       script.async = true;
-      script.dataset.gtm = "GTM-TKG2VFL6";
+      script.dataset['gtm'] = "GTM-TKG2VFL6";
       script.src = "https://www.googletagmanager.com/gtm.js?id=GTM-TKG2VFL6";
       document.head.appendChild(script);
     }

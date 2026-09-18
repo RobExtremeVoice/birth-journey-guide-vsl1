@@ -37,7 +37,7 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const modules = [
+const modules: Array<[string, string, string]> = [
   ["01", "A jornada começa na gestação", "Como preparar corpo, mente e ambiente para as escolhas que virão."],
   ["02", "Fisiologia do parto", "Entenda hormônios, posições e os sinais naturais do corpo."],
   ["03", "Trabalho de parto", "Fases, contrações e o momento mais seguro de ir à maternidade."],
@@ -49,7 +49,7 @@ const modules = [
   ["09", "Pós-parto e amamentação", "Uma preparação realista para o puerpério e os primeiros dias."],
 ];
 
-const bonuses = [
+const bonuses: Array<[string, string, string]> = [
   ["Guia prático", "Quando ir à maternidade", "Um checklist objetivo para reconhecer sinais e organizar a saída."],
   ["Áudios guiados", "Respiração e relaxamento", "Práticas curtas para treinar durante a gestação e usar no trabalho de parto."],
   ["Modelo editável", "Plano de parto", "Estrutura para registrar preferências e facilitar o diálogo com a equipe."],
@@ -67,7 +67,7 @@ const painPoints = [
   "Chegar ao nascimento sem conhecer seus direitos e escolhas",
 ];
 
-const faqs = [
+const faqs: Array<[string, string]> = [
   ["O curso serve para quem terá o bebê pelo SUS?", "Sim. O conteúdo foi pensado para preparar gestantes e acompanhantes tanto para o SUS quanto para a rede particular, respeitando os diferentes contextos de assistência."],
   ["E se eu tiver indicação de cesárea?", "O curso também ajuda você a compreender o nascimento, preparar-se para conversar com a equipe e viver a experiência com mais consciência. As decisões médicas devem sempre ser tomadas com seus profissionais de saúde."],
   ["Meu acompanhante também pode assistir?", "Sim. Há conteúdos específicos para que a pessoa escolhida saiba acolher, apoiar e participar de forma ativa."],
@@ -112,7 +112,7 @@ function Index() {
     setUpgradeOpen(true);
   };
 
-  const testimonials = [
+  const testimonials: Array<[string, string]> = [
     ["Camila, mãe da Helena", "Eu deixei de imaginar apenas cenários assustadores. Cheguei mais calma, entendendo o que meu corpo estava fazendo e o que eu poderia perguntar."],
     ["Renata e Guilherme", "Meu companheiro saiu do papel de espectador. Ele sabia como me apoiar, como conversar com a equipe e como proteger aquele momento."],
     ["Juliana, mãe do Theo", "O plano de parto organizou nossas escolhas. Mesmo quando o nascimento tomou outro caminho, eu me senti ouvida e participante."],
@@ -185,7 +185,7 @@ function Index() {
 
         <section className="bg-secondary px-4 py-16 md:px-8 md:py-24"><div className="mx-auto max-w-7xl"><SectionTitle eyebrow="Histórias de transformação" title="Mais presença, clareza e confiança para o grande dia" />
           <div className="hidden gap-5 md:grid md:grid-cols-3">{testimonials.map(([name,quote]) => <Testimonial key={name} name={name} quote={quote} />)}</div>
-          <div className="md:hidden"><Testimonial name={testimonials[testimonial][0]} quote={testimonials[testimonial][1]} /><div className="mt-5 flex justify-center gap-3"><Button variant="outline" size="icon" className="rounded-full" onClick={() => setTestimonial((testimonial + 2) % 3)} aria-label="Depoimento anterior"><ChevronLeft /></Button><Button variant="outline" size="icon" className="rounded-full" onClick={() => setTestimonial((testimonial + 1) % 3)} aria-label="Próximo depoimento"><ChevronRight /></Button></div></div>
+          <div className="md:hidden"><Testimonial name={testimonials[testimonial]?.[0] ?? ""} quote={testimonials[testimonial]?.[1] ?? ""} /><div className="mt-5 flex justify-center gap-3"><Button variant="outline" size="icon" className="rounded-full" onClick={() => setTestimonial((testimonial + 2) % 3)} aria-label="Depoimento anterior"><ChevronLeft /></Button><Button variant="outline" size="icon" className="rounded-full" onClick={() => setTestimonial((testimonial + 1) % 3)} aria-label="Próximo depoimento"><ChevronRight /></Button></div></div>
           <p className="mt-6 text-center text-xs text-muted-foreground">Relatos ilustrativos da transformação proporcionada pela preparação; substitua por depoimentos autorizados antes da publicação.</p>
         </div></section>
 
