@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type DetailedHTMLProps, type HTMLAttributes } from "react";
 import {
   ArrowRight,
   Baby,
@@ -76,8 +76,8 @@ const faqs = [
   ["Quais são as formas de pagamento?", "A compra é processada pela Hotmart, com pagamento à vista ou parcelado em até 10 vezes, conforme as condições exibidas no checkout."],
 ];
 
-function SectionTitle({ eyebrow, title, text }: { eyebrow: string; title: string; text?: string }) {
-  return <div className="mx-auto mb-10 max-w-3xl text-center md:mb-14"><p className="mb-3 text-xs font-extrabold uppercase text-primary">{eyebrow}</p><h2 className="text-3xl font-extrabold leading-tight text-plum md:text-5xl">{title}</h2>{text && <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">{text}</p>}</div>;
+function SectionTitle({ eyebrow, title, text, light = false }: { eyebrow: string; title: string; text?: string; light?: boolean }) {
+  return <div className="mx-auto mb-10 max-w-3xl text-center md:mb-14"><p className={`mb-3 text-xs font-extrabold uppercase ${light ? "text-warm" : "text-primary"}`}>{eyebrow}</p><h2 className={`text-3xl font-extrabold leading-tight md:text-5xl ${light ? "text-primary-foreground" : "text-plum"}`}>{title}</h2>{text && <p className={`mx-auto mt-5 max-w-2xl text-base leading-relaxed md:text-lg ${light ? "text-primary-foreground/75" : "text-muted-foreground"}`}>{text}</p>}</div>;
 }
 
 function Brand() {
@@ -150,7 +150,7 @@ function Index() {
         </section>
 
         <section className="bg-plum px-4 py-16 text-primary-foreground md:px-8 md:py-24">
-          <div className="mx-auto max-w-7xl"><SectionTitle eyebrow="Você não está sozinha" title="Você deseja viver esse momento com mais segurança e menos medo?" text="É comum sentir insegurança diante do desconhecido. Preparação não é controlar o parto — é chegar com recursos para compreender, perguntar e participar." />
+          <div className="mx-auto max-w-7xl"><SectionTitle light eyebrow="Você não está sozinha" title="Você deseja viver esse momento com mais segurança e menos medo?" text="É comum sentir insegurança diante do desconhecido. Preparação não é controlar o parto — é chegar com recursos para compreender, perguntar e participar." />
             <div className="grid gap-3 md:grid-cols-5">{painPoints.map((item, i) => <div key={item} className="rounded-2xl border border-primary-foreground/15 bg-primary-foreground/8 p-5"><span className="mb-5 block text-3xl font-extrabold text-warm">0{i + 1}</span><p className="font-semibold leading-relaxed">{item}</p></div>)}</div>
           </div>
         </section>
@@ -159,6 +159,7 @@ function Index() {
           <div className="grid overflow-hidden rounded-2xl border bg-card shadow-sm md:grid-cols-2">
             <div className="p-7 md:p-10"><p className="mb-6 text-sm font-extrabold uppercase text-muted-foreground">Sem preparação</p>{["Medo do que pode acontecer", "Dúvidas que ficam sem resposta", "Acompanhante inseguro", "Preferências difíceis de comunicar"].map(x => <p key={x} className="mb-4 flex gap-3 text-muted-foreground"><X className="mt-0.5 size-5 shrink-0 text-destructive" />{x}</p>)}</div>
             <div className="bg-secondary p-7 md:p-10"><p className="mb-6 text-sm font-extrabold uppercase text-primary">Com O Poder do Parto</p>{["Conhecimento para reconhecer cada fase", "Recursos práticos de conforto", "Acompanhante preparado e presente", "Plano alinhado e diálogo consciente"].map(x => <p key={x} className="mb-4 flex gap-3 font-semibold text-plum"><Check className="mt-0.5 size-5 shrink-0 text-primary" />{x}</p>)}</div>
+          </div>
           </div>
         </section>
 
@@ -171,7 +172,7 @@ function Index() {
           <div className="hidden grid-cols-3 gap-4 md:grid">{modules.map(([n,t,d]) => <article key={n} className="rounded-2xl border bg-card p-6 transition-transform hover:-translate-y-1"><span className="text-3xl font-extrabold text-secondary-foreground">{n}</span><h3 className="mt-5 text-lg font-bold text-plum">{t}</h3><p className="mt-2 text-sm leading-relaxed text-muted-foreground">{d}</p></article>)}</div>
         </div></section>
 
-        <section id="bonus" className="bg-plum px-4 py-16 text-primary-foreground md:px-8 md:py-24"><div className="mx-auto max-w-7xl"><SectionTitle eyebrow="Ainda tem mais" title="7 bônus para levar o conteúdo à prática" />
+        <section id="bonus" className="bg-plum px-4 py-16 text-primary-foreground md:px-8 md:py-24"><div className="mx-auto max-w-7xl"><SectionTitle light eyebrow="Ainda tem mais" title="7 bônus para levar o conteúdo à prática" />
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{bonuses.map(([tag,title,text],i) => <article key={title} className={`rounded-2xl border border-primary-foreground/15 bg-primary-foreground/8 p-6 ${i === 6 ? "lg:col-span-2" : ""}`}><span className="inline-flex rounded-full bg-warm px-3 py-1 text-[10px] font-extrabold text-plum">BÔNUS INCLUÍDO</span><p className="mt-5 text-xs font-bold uppercase text-warm-soft">{tag}</p><h3 className="mt-2 text-lg font-extrabold">{title}</h3><p className="mt-3 text-sm leading-relaxed text-primary-foreground/75">{text}</p></article>)}</div>
         </div></section>
 
@@ -204,7 +205,7 @@ function Index() {
 
       <footer className="bg-foreground px-4 py-12 text-background/70 md:px-8"><div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-3"><div><Brand /><p className="mt-4 max-w-sm text-sm leading-relaxed">Educação para uma experiência de nascimento mais consciente, respeitosa e informada.</p></div><div><p className="font-bold text-background">Atendimento</p><p className="mt-3 text-sm">Suporte: atendimento@poderdoparto.com.br</p><p className="mt-2 text-sm">Dados cadastrais e CNPJ: consulte no checkout</p></div><div><p className="font-bold text-background">Informações legais</p><div className="mt-3 flex gap-4 text-sm"><a href="https://www.poderdoparto.com.br/termos" className="underline">Termos de Uso</a><a href="https://www.poderdoparto.com.br/privacidade" className="underline">Política de Privacidade</a></div></div></div><div className="mx-auto mt-10 max-w-7xl border-t border-background/15 pt-7 text-xs leading-relaxed"><p>O conteúdo possui finalidade educacional e não substitui consultas, diagnóstico, orientação ou acompanhamento de profissionais de saúde. © 2026 O Poder do Parto. Todos os direitos reservados.</p></div></footer>
 
-      <Dialog open={upgradeOpen} onOpenChange={setUpgradeOpen}><DialogContent className="max-h-[90vh] w-[calc(100%-2rem)] max-w-xl overflow-y-auto rounded-2xl border-primary/20 p-7 md:p-9"><div className="mx-auto grid size-14 place-items-center rounded-full bg-secondary text-primary"><MessageCircleHeart className="size-7" /></div><DialogTitle className="text-center text-2xl font-extrabold leading-tight text-plum">{offerConfig.upgradeModal.title}</DialogTitle><DialogDescription className="text-center text-base leading-relaxed">{offerConfig.upgradeModal.subtitle}</DialogDescription><div className="rounded-2xl bg-secondary p-5 text-center"><p className="text-sm font-semibold text-primary">Adicione o suporte direto por apenas</p><p className="mt-1 text-4xl font-extrabold text-plum">+ R$ {offerConfig.upgradeModal.differencePrice}</p><p className="mt-2 font-bold text-plum">Total R$ {offerConfig.upgradeModal.totalPrice} • {offerConfig.upgradeModal.installments}</p></div><p className="flex gap-3 text-sm leading-relaxed"><CircleCheck className="mt-0.5 size-5 shrink-0 text-primary" />{offerConfig.upgradeModal.includedBenefit}</p><Button className="min-h-14 rounded-2xl bg-accent font-extrabold hover:bg-accent/90" onClick={() => { trackEvent("upgrade_accepted", { total_price: 347 }); goToCheckout(offerConfig.upgradeModal.upgradeCheckoutUrl, "upgrade_complete"); }}>SIM, QUERO O PLANO COMPLETO</Button><DialogClose asChild><button className="text-sm text-muted-foreground underline underline-offset-4" onClick={() => goToCheckout(offerConfig.essential.checkoutUrl, "essential")}>Não, obrigada. Continuar apenas com o Essencial por R$ 297</button></DialogClose></DialogContent></Dialog>
+      <Dialog open={upgradeOpen} onOpenChange={setUpgradeOpen}><DialogContent className="max-h-[90vh] w-[calc(100%-2rem)] max-w-xl overflow-y-auto rounded-2xl border-primary/20 p-7 md:p-9"><div className="mx-auto grid size-14 place-items-center rounded-full bg-secondary text-primary"><MessageCircleHeart className="size-7" /></div><DialogTitle className="text-center text-2xl font-extrabold leading-tight text-plum">{offerConfig.upgradeModal.title}</DialogTitle><DialogDescription className="text-center text-base leading-relaxed">{offerConfig.upgradeModal.subtitle}</DialogDescription><div className="rounded-2xl bg-secondary p-5 text-center"><p className="text-sm font-semibold text-primary">Adicione o suporte direto por apenas</p><p className="mt-1 text-4xl font-extrabold text-plum">+ R$ {offerConfig.upgradeModal.differencePrice}</p><p className="mt-2 font-bold text-plum">Total R$ {offerConfig.upgradeModal.totalPrice} • {offerConfig.upgradeModal.installments}</p></div><p className="flex gap-3 text-sm leading-relaxed"><CircleCheck className="mt-0.5 size-5 shrink-0 text-primary" />{offerConfig.upgradeModal.includedBenefit}</p><Button className="min-h-14 rounded-2xl bg-accent font-extrabold hover:bg-accent/90" onClick={() => { trackEvent("upgrade_accepted", { total_price: 347 }); goToCheckout(offerConfig.upgradeModal.upgradeCheckoutUrl, "upgrade_complete"); }}>SIM, QUERO O PLANO COMPLETO</Button><DialogClose asChild><Button variant="link" className="h-auto whitespace-normal text-sm text-muted-foreground" onClick={() => goToCheckout(offerConfig.essential.checkoutUrl, "essential")}>Não, obrigada. Continuar apenas com o Essencial por R$ 297</Button></DialogClose></DialogContent></Dialog>
     </div>
   );
 }
@@ -221,7 +222,7 @@ function Testimonial({ name, quote }: { name: string; quote: string }) {
 declare module "react" {
   namespace JSX {
     interface IntrinsicElements {
-      "vturb-smartplayer": React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+      "vturb-smartplayer": DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>;
     }
   }
 }
