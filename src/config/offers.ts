@@ -2,7 +2,7 @@ export const offerConfig = {
   essential: {
     name: "Poder do Parto Essencial",
     price: 297,
-    installments: "10x de R$ 34,70*",
+    installments: "em até 12x no cartão*",
     checkoutUrl: "https://pay.hotmart.com/X88395451D?off=o69s199w",
     features: [
       "Curso Completo (9 módulos e mais de 70 aulas)",
@@ -16,7 +16,7 @@ export const offerConfig = {
     name: "Poder do Parto Completo",
     tag: "MAIS RECOMENDADO",
     price: 397,
-    installments: "10x de R$ 46,39*",
+    installments: "em até 12x no cartão*",
     checkoutUrl: "https://pay.hotmart.com/X88395451D",
     features: [
       "Tudo do Plano Essencial (9 módulos + 7 bônus)",
@@ -31,9 +31,15 @@ export const offerConfig = {
     subtitle: "Faça o upgrade para o Plano Completo com 50% de desconto na diferença:",
     differencePrice: 50,
     totalPrice: 347,
-    installments: "10x de R$ 40,55*",
+    installments: "em até 12x no cartão*",
     upgradeCheckoutUrl: "https://pay.hotmart.com/X88395451D",
     includedBenefit:
       "Acesso Direto ao WhatsApp exclusivo da Mariana Betioli para tirar dúvidas durante a gestação",
+  },
+  orderBump: {
+    title: "Complete sua preparação com um guia prático",
+    name: "Guia Completo de 18 Perguntas Essenciais para Fazer ao Seu Obstetra",
+    price: 27,
+    checkoutUrl: "https://pay.hotmart.com/X88395451D?off=flzn4zkg",
   },
 } as const;
