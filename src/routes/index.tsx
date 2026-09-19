@@ -21,7 +21,9 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { offerConfig } from "@/config/offers";
 import { goToCheckout, trackEvent } from "@/lib/tracking";
-import mariPortrait from "@/assets/mari-betioli-portrait.jpg";
+import mariPortrait from "@/assets/mariana-betioli.png.asset.json";
+import brandLogo from "@/assets/o-poder-do-parto.png.asset.json";
+import brandLogoWhite from "@/assets/o-poder-do-parto-white.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -73,20 +75,22 @@ const faqs: Array<[string, string]> = [
   ["Meu acompanhante também pode assistir?", "Sim. Há conteúdos específicos para que a pessoa escolhida saiba acolher, apoiar e participar de forma ativa."],
   ["Por quanto tempo terei acesso?", "O acesso é vitalício, para que você assista no seu ritmo e retome as aulas sempre que precisar."],
   ["Como funciona o suporte?", "O plano Completo inclui comunicação direta pelo WhatsApp da Mariana Betioli. O plano Essencial inclui todo o conteúdo e os materiais do curso."],
-  ["Quais são as formas de pagamento?", "A compra é processada pela Hotmart, com pagamento à vista ou parcelado em até 10 vezes, conforme as condições exibidas no checkout."],
+  ["Quais são as formas de pagamento?", "A compra é processada pela Hotmart, com pagamento à vista ou parcelado em até 12 vezes, conforme as condições exibidas no checkout."],
 ];
 
 function SectionTitle({ eyebrow, title, text, light = false }: { eyebrow: string; title: string; text?: string; light?: boolean }) {
   return <div className="mx-auto mb-10 max-w-3xl text-center md:mb-14"><p className={`mb-3 text-xs font-extrabold uppercase ${light ? "text-warm" : "text-primary"}`}>{eyebrow}</p><h2 className={`text-3xl font-extrabold leading-tight md:text-5xl ${light ? "text-primary-foreground" : "text-plum"}`}>{title}</h2>{text && <p className={`mx-auto mt-5 max-w-2xl text-base leading-relaxed md:text-lg ${light ? "text-primary-foreground/75" : "text-muted-foreground"}`}>{text}</p>}</div>;
 }
 
-function Brand() {
-  return <a href="#inicio" className="flex items-center gap-2 text-plum" aria-label="O Poder do Parto — início"><span className="grid size-9 place-items-center rounded-full bg-secondary"><Baby className="size-5 text-primary" /></span><span className="text-lg font-extrabold">O Poder <em className="font-medium text-primary">do Parto</em></span></a>;
+function Brand({ light = false }: { light?: boolean }) {
+  const logo = light ? brandLogoWhite : brandLogo;
+  return <a href="#inicio" className="inline-flex shrink-0" aria-label="O Poder do Parto — início"><img src={logo.url} alt="O Poder do Parto" width={1600} height={531} className="h-10 w-auto object-contain md:h-12" /></a>;
 }
 
 function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [upgradeOpen, setUpgradeOpen] = useState(false);
+  const [orderBumpOpen, setOrderBumpOpen] = useState(false);
   const [testimonial, setTestimonial] = useState(0);
   const [videoReady, setVideoReady] = useState(false);
 
@@ -112,6 +116,13 @@ function Index() {
     setUpgradeOpen(true);
   };
 
+  const showCompleteOrderBump = (source: string) => {
+    trackEvent("plan_selected", { plan: "complete", source });
+    trackEvent("order_bump_view", { product: "guia_18_perguntas", price: offerConfig.orderBump.price });
+    setUpgradeOpen(false);
+    setOrderBumpOpen(true);
+  };
+
   const testimonials: Array<[string, string]> = [
     ["Camila, mãe da Helena", "Eu deixei de imaginar apenas cenários assustadores. Cheguei mais calma, entendendo o que meu corpo estava fazendo e o que eu poderia perguntar."],
     ["Renata e Guilherme", "Meu companheiro saiu do papel de espectador. Ele sabia como me apoiar, como conversar com a equipe e como proteger aquele momento."],
@@ -134,17 +145,17 @@ function Index() {
       </header>
 
       <main>
-        <section id="inicio" className="relative px-4 pb-16 pt-12 md:px-8 md:pb-24 md:pt-20">
+        <section id="inicio" className="relative px-4 pb-14 pt-6 md:px-8 md:pb-20 md:pt-8">
           <div className="absolute inset-x-0 top-0 -z-10 h-3/4 bg-gradient-to-b from-secondary/80 to-background" />
           <div className="mx-auto max-w-5xl text-center">
-            <div className="mx-auto mb-5 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-4 py-2 text-xs font-bold text-primary"><Sparkles className="size-4" />Informação transforma medo em escolha</div>
-            <h1 className="mx-auto max-w-5xl text-4xl font-extrabold leading-tight text-plum md:text-6xl">Prepare-se para viver o nascimento do seu bebê com mais consciência, confiança e protagonismo</h1>
-            <p className="mx-auto mt-6 max-w-3xl text-base leading-relaxed text-muted-foreground md:text-xl">Da gestação ao pós-parto: entenda o trabalho de parto, pratique técnicas de alívio da dor, construa seu plano, conheça seus direitos e prepare um acompanhante verdadeiramente ativo.</p>
-            <div className="relative mx-auto mt-9 aspect-video w-full max-w-4xl overflow-hidden rounded-2xl border-4 border-background bg-plum shadow-2xl">
+            <div className="mx-auto mb-3 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-3 py-1.5 text-[11px] font-bold text-primary md:text-xs"><Sparkles className="size-3.5" />Informação transforma medo em escolha</div>
+            <h1 className="mx-auto max-w-4xl text-3xl font-extrabold leading-tight text-plum md:text-4xl lg:text-5xl">Prepare-se para viver o nascimento do seu bebê com mais consciência, confiança e protagonismo</h1>
+            <p className="mx-auto mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground md:text-base">Da gestação ao pós-parto: entenda o trabalho de parto, conheça seus direitos e prepare um acompanhante verdadeiramente ativo.</p>
+            <div className="relative mx-auto mt-5 aspect-video w-full max-w-3xl overflow-hidden rounded-2xl border-4 border-background bg-plum shadow-2xl">
               <vturb-smartplayer id="vid-6a288cff68519b4d1b50bf92" className="block h-full w-full" />
               {!videoReady && <div className="absolute inset-0 grid place-items-center bg-plum text-primary-foreground"><div className="text-center"><span className="mx-auto grid size-20 place-items-center rounded-full bg-accent shadow-lg"><Play className="ml-1 size-8 fill-current" /></span><p className="mt-4 text-sm font-semibold">O vídeo está carregando...</p></div></div>}
             </div>
-            <Button onClick={() => scrollToOffers("hero")} className="mt-8 min-h-14 w-full rounded-2xl bg-accent px-6 text-sm font-extrabold shadow-xl hover:bg-accent/90 sm:w-auto sm:text-base">QUERO ME PREPARAR PARA O MEU PARTO <ArrowRight /></Button>
+            <Button onClick={() => scrollToOffers("hero")} className="mt-6 min-h-14 w-full rounded-2xl bg-accent px-6 text-sm font-extrabold shadow-xl hover:bg-accent/90 sm:w-auto sm:text-base">QUERO ME PREPARAR PARA O MEU PARTO <ArrowRight /></Button>
             <p className="mt-4 text-sm font-semibold text-muted-foreground">Acesso vitalício • Garantia de 7 dias • No seu próprio ritmo</p>
           </div>
         </section>
@@ -179,7 +190,7 @@ function Index() {
         <section id="ofertas" className="px-4 py-16 md:px-8 md:py-24"><div className="mx-auto max-w-5xl"><SectionTitle eyebrow="Escolha sua experiência" title="Comece hoje a sua preparação" text="Os dois planos incluem o curso completo, bônus, materiais e acesso vitalício." />
           <div className="grid items-stretch gap-6 md:grid-cols-2">
             <PlanCard plan="essential" onChoose={chooseEssential} />
-            <PlanCard plan="complete" featured onChoose={() => { trackEvent("plan_selected", { plan: "complete" }); goToCheckout(offerConfig.complete.checkoutUrl, "complete"); }} />
+            <PlanCard plan="complete" featured onChoose={() => showCompleteOrderBump("pricing")} />
           </div><p className="mt-5 text-center text-xs text-muted-foreground">*Parcelamento com acréscimo da plataforma. Consulte as condições no checkout.</p>
         </div></section>
 
@@ -190,7 +201,7 @@ function Index() {
         </div></section>
 
         <section id="mari" className="px-4 py-16 md:px-8 md:py-24"><div className="mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-[0.8fr_1.2fr] md:gap-16">
-          <div className="relative"><div className="absolute -inset-3 -z-10 rounded-2xl bg-secondary" /><img src={mariPortrait} alt="Imagem editorial representando Mariana Betioli" loading="lazy" width={1280} height={1536} className="aspect-[4/5] w-full rounded-2xl object-cover" /></div>
+          <div className="relative"><div className="absolute -inset-3 -z-10 rounded-2xl bg-secondary" /><img src={mariPortrait.url} alt="Mariana Betioli, especialista em preparação para o parto" loading="lazy" width={294} height={300} className="aspect-[4/5] w-full rounded-2xl object-cover" /></div>
           <div><p className="text-xs font-extrabold uppercase text-primary">Sua especialista</p><h2 className="mt-3 text-4xl font-extrabold text-plum md:text-5xl">Mari Betioli</h2><p className="mt-3 text-lg font-bold text-primary">19 anos dedicados à assistência ao parto e à saúde da mulher</p><p className="mt-6 leading-relaxed text-muted-foreground">Com experiência no Brasil, em Portugal e nos Estados Unidos, Mariana acompanhou mulheres em casas de parto, hospitais e partos domiciliares. Sua missão é tornar o conhecimento acessível para que cada família participe do nascimento com mais consciência e respeito.</p><blockquote className="mt-7 border-l-4 border-warm pl-5 text-xl font-semibold leading-relaxed text-plum">“Preparar-se não é buscar um parto perfeito. É construir recursos para viver cada escolha com informação, apoio e protagonismo.”</blockquote></div>
         </div></section>
 
@@ -203,9 +214,11 @@ function Index() {
         <section className="bg-plum px-4 py-16 text-center text-primary-foreground md:px-8 md:py-24"><div className="mx-auto max-w-4xl"><Baby className="mx-auto size-12 text-warm" /><h2 className="mt-6 text-3xl font-extrabold leading-tight md:text-5xl">Você não precisa chegar ao parto sem saber o que esperar.</h2><p className="mx-auto mt-5 max-w-2xl text-primary-foreground/75 md:text-lg">Prepare-se com informação confiável, ferramentas práticas e acolhimento para viver esse momento com mais segurança.</p><Button onClick={() => scrollToOffers("final_cta")} className="mt-8 min-h-14 w-full rounded-2xl bg-accent px-7 font-extrabold hover:bg-accent/90 sm:w-auto">QUERO COMEÇAR AGORA <ArrowRight /></Button></div></section>
       </main>
 
-      <footer className="bg-foreground px-4 py-12 text-background/70 md:px-8"><div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-3"><div><Brand /><p className="mt-4 max-w-sm text-sm leading-relaxed">Educação para uma experiência de nascimento mais consciente, respeitosa e informada.</p></div><div><p className="font-bold text-background">Atendimento</p><p className="mt-3 text-sm">Suporte: atendimento@poderdoparto.com.br</p><p className="mt-2 text-sm">Dados cadastrais e CNPJ: consulte no checkout</p></div><div><p className="font-bold text-background">Informações legais</p><div className="mt-3 flex gap-4 text-sm"><a href="https://www.poderdoparto.com.br/termos" className="underline">Termos de Uso</a><a href="https://www.poderdoparto.com.br/privacidade" className="underline">Política de Privacidade</a></div></div></div><div className="mx-auto mt-10 max-w-7xl border-t border-background/15 pt-7 text-xs leading-relaxed"><p>O conteúdo possui finalidade educacional e não substitui consultas, diagnóstico, orientação ou acompanhamento de profissionais de saúde. © 2026 O Poder do Parto. Todos os direitos reservados.</p></div></footer>
+      <footer className="bg-foreground px-4 py-12 text-background/70 md:px-8"><div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-3"><div><Brand light /><p className="mt-4 max-w-sm text-sm leading-relaxed">Educação para uma experiência de nascimento mais consciente, respeitosa e informada.</p></div><div><p className="font-bold text-background">Atendimento</p><p className="mt-3 text-sm">Suporte: atendimento@poderdoparto.com.br</p><p className="mt-2 text-sm">Dados cadastrais e CNPJ: consulte no checkout</p></div><div><p className="font-bold text-background">Informações legais</p><div className="mt-3 flex gap-4 text-sm"><a href="https://www.poderdoparto.com.br/termos" className="underline">Termos de Uso</a><a href="https://www.poderdoparto.com.br/privacidade" className="underline">Política de Privacidade</a></div></div></div><div className="mx-auto mt-10 max-w-7xl border-t border-background/15 pt-7 text-xs leading-relaxed"><p>O conteúdo possui finalidade educacional e não substitui consultas, diagnóstico, orientação ou acompanhamento de profissionais de saúde. © 2026 O Poder do Parto. Todos os direitos reservados.</p></div></footer>
 
-      <Dialog open={upgradeOpen} onOpenChange={setUpgradeOpen}><DialogContent className="max-h-[90vh] w-[calc(100%-2rem)] max-w-xl overflow-y-auto rounded-2xl border-primary/20 p-7 md:p-9"><div className="mx-auto grid size-14 place-items-center rounded-full bg-secondary text-primary"><MessageCircleHeart className="size-7" /></div><DialogTitle className="text-center text-2xl font-extrabold leading-tight text-plum">{offerConfig.upgradeModal.title}</DialogTitle><DialogDescription className="text-center text-base leading-relaxed">{offerConfig.upgradeModal.subtitle}</DialogDescription><div className="rounded-2xl bg-secondary p-5 text-center"><p className="text-sm font-semibold text-primary">Adicione o suporte direto por apenas</p><p className="mt-1 text-4xl font-extrabold text-plum">+ R$ {offerConfig.upgradeModal.differencePrice}</p><p className="mt-2 font-bold text-plum">Total R$ {offerConfig.upgradeModal.totalPrice} • {offerConfig.upgradeModal.installments}</p></div><p className="flex gap-3 text-sm leading-relaxed"><CircleCheck className="mt-0.5 size-5 shrink-0 text-primary" />{offerConfig.upgradeModal.includedBenefit}</p><Button className="min-h-14 rounded-2xl bg-accent font-extrabold hover:bg-accent/90" onClick={() => { trackEvent("upgrade_accepted", { total_price: 347 }); goToCheckout(offerConfig.upgradeModal.upgradeCheckoutUrl, "upgrade_complete"); }}>SIM, QUERO O PLANO COMPLETO</Button><DialogClose asChild><Button variant="link" className="h-auto whitespace-normal text-sm text-muted-foreground" onClick={() => goToCheckout(offerConfig.essential.checkoutUrl, "essential")}>Não, obrigada. Continuar apenas com o Essencial por R$ 297</Button></DialogClose></DialogContent></Dialog>
+      <Dialog open={upgradeOpen} onOpenChange={setUpgradeOpen}><DialogContent className="max-h-[90vh] w-[calc(100%-2rem)] max-w-xl overflow-y-auto rounded-2xl border-primary/20 p-7 md:p-9"><div className="mx-auto grid size-14 place-items-center rounded-full bg-secondary text-primary"><MessageCircleHeart className="size-7" /></div><DialogTitle className="text-center text-2xl font-extrabold leading-tight text-plum">{offerConfig.upgradeModal.title}</DialogTitle><DialogDescription className="text-center text-base leading-relaxed">{offerConfig.upgradeModal.subtitle}</DialogDescription><div className="rounded-2xl bg-secondary p-5 text-center"><p className="text-sm font-semibold text-primary">Adicione o suporte direto por apenas</p><p className="mt-1 text-4xl font-extrabold text-plum">+ R$ {offerConfig.upgradeModal.differencePrice}</p><p className="mt-2 font-bold text-plum">Total R$ {offerConfig.upgradeModal.totalPrice} • {offerConfig.upgradeModal.installments}</p></div><p className="flex gap-3 text-sm leading-relaxed"><CircleCheck className="mt-0.5 size-5 shrink-0 text-primary" />{offerConfig.upgradeModal.includedBenefit}</p><Button className="min-h-14 rounded-2xl bg-accent font-extrabold hover:bg-accent/90" onClick={() => { trackEvent("upgrade_accepted", { total_price: 347 }); showCompleteOrderBump("essential_upgrade"); }}>SIM, QUERO O PLANO COMPLETO</Button><DialogClose asChild><Button variant="link" className="h-auto whitespace-normal text-sm text-muted-foreground" onClick={() => goToCheckout(offerConfig.essential.checkoutUrl, "essential")}>Não, obrigada. Continuar apenas com o Essencial por R$ 297</Button></DialogClose></DialogContent></Dialog>
+
+      <Dialog open={orderBumpOpen} onOpenChange={setOrderBumpOpen}><DialogContent className="max-h-[90vh] w-[calc(100%-2rem)] max-w-xl overflow-y-auto rounded-2xl border-primary/20 p-7 md:p-9"><div className="mx-auto grid size-14 place-items-center rounded-full bg-secondary text-primary"><BookOpen className="size-7" /></div><DialogTitle className="text-center text-2xl font-extrabold leading-tight text-plum">{offerConfig.orderBump.title}</DialogTitle><DialogDescription className="text-center text-base leading-relaxed">Antes de continuar, adicione este material objetivo ao seu Plano Completo.</DialogDescription><div className="rounded-2xl border border-primary/20 bg-secondary p-5"><p className="text-center text-lg font-extrabold leading-snug text-plum">{offerConfig.orderBump.name}</p><p className="mt-3 text-center text-4xl font-extrabold text-primary">R$ {offerConfig.orderBump.price},00</p></div><p className="flex gap-3 text-sm leading-relaxed text-muted-foreground"><CircleCheck className="mt-0.5 size-5 shrink-0 text-primary" />Leve perguntas essenciais organizadas para conversar com seu obstetra com mais clareza.</p><Button className="min-h-14 whitespace-normal rounded-2xl bg-accent font-extrabold hover:bg-accent/90" onClick={() => { trackEvent("order_bump_accepted", { product: "guia_18_perguntas", price: 27 }); goToCheckout(offerConfig.orderBump.checkoutUrl, "complete_with_guide"); }}>SIM, QUERO ADICIONAR O GUIA POR R$ 27</Button><DialogClose asChild><Button variant="link" className="h-auto whitespace-normal text-sm text-muted-foreground" onClick={() => { trackEvent("order_bump_declined", { product: "guia_18_perguntas" }); goToCheckout(offerConfig.complete.checkoutUrl, "complete"); }}>Não, obrigada. Continuar somente com o Plano Completo</Button></DialogClose></DialogContent></Dialog>
     </div>
   );
 }
