@@ -5,8 +5,6 @@ import {
   Baby,
   BookOpen,
   Check,
-  ChevronLeft,
-  ChevronRight,
   CircleCheck,
   HeartHandshake,
   Menu,
@@ -24,6 +22,15 @@ import { goToCheckout, trackEvent } from "@/lib/tracking";
 import mariPortrait from "@/assets/mariana-betioli.png.asset.json";
 import brandLogo from "@/assets/o-poder-do-parto.png.asset.json";
 import brandLogoWhite from "@/assets/o-poder-do-parto-white.png.asset.json";
+import testimonial1 from "@/assets/testimonials/testimonial-1.jpg.asset.json";
+import testimonial2 from "@/assets/testimonials/testimonial-2.jpg.asset.json";
+import testimonial3 from "@/assets/testimonials/testimonial-3.jpg.asset.json";
+import testimonial4 from "@/assets/testimonials/testimonial-4.jpg.asset.json";
+import testimonial5 from "@/assets/testimonials/testimonial-5.jpg.asset.json";
+import testimonial6 from "@/assets/testimonials/testimonial-6.jpg.asset.json";
+import testimonial7 from "@/assets/testimonials/testimonial-7.jpg.asset.json";
+import testimonial8 from "@/assets/testimonials/testimonial-8.jpg.asset.json";
+import testimonial9 from "@/assets/testimonials/testimonial-9.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -69,6 +76,8 @@ const painPoints = [
   "Chegar ao nascimento sem conhecer seus direitos e escolhas",
 ];
 
+const testimonials = [testimonial1, testimonial2, testimonial3, testimonial4, testimonial5, testimonial6, testimonial7, testimonial8, testimonial9];
+
 const faqs: Array<[string, string]> = [
   ["O curso serve para quem terá o bebê pelo SUS?", "Sim. O conteúdo foi pensado para preparar gestantes e acompanhantes tanto para o SUS quanto para a rede particular, respeitando os diferentes contextos de assistência."],
   ["E se eu tiver indicação de cesárea?", "O curso também ajuda você a compreender o nascimento, preparar-se para conversar com a equipe e viver a experiência com mais consciência. As decisões médicas devem sempre ser tomadas com seus profissionais de saúde."],
@@ -91,7 +100,6 @@ function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [upgradeOpen, setUpgradeOpen] = useState(false);
   const [orderBumpOpen, setOrderBumpOpen] = useState(false);
-  const [testimonial, setTestimonial] = useState(0);
   const [videoReady, setVideoReady] = useState(false);
 
   useEffect(() => {
@@ -123,12 +131,6 @@ function Index() {
     setOrderBumpOpen(true);
   };
 
-  const testimonials: Array<[string, string]> = [
-    ["Camila, mãe da Helena", "Eu deixei de imaginar apenas cenários assustadores. Cheguei mais calma, entendendo o que meu corpo estava fazendo e o que eu poderia perguntar."],
-    ["Renata e Guilherme", "Meu companheiro saiu do papel de espectador. Ele sabia como me apoiar, como conversar com a equipe e como proteger aquele momento."],
-    ["Juliana, mãe do Theo", "O plano de parto organizou nossas escolhas. Mesmo quando o nascimento tomou outro caminho, eu me senti ouvida e participante."],
-  ];
-
   return (
     <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
       <div className="bg-plum px-4 py-2 text-center text-xs font-semibold text-primary-foreground sm:text-sm">Preparação completa para gestantes e seus acompanhantes • SUS e Particular</div>
@@ -145,13 +147,13 @@ function Index() {
       </header>
 
       <main>
-        <section id="inicio" className="relative px-4 pb-14 pt-6 md:px-8 md:pb-20 md:pt-8">
+        <section id="inicio" className="relative px-4 pb-14 pt-3 md:px-8 md:pb-20 md:pt-3">
           <div className="absolute inset-x-0 top-0 -z-10 h-3/4 bg-gradient-to-b from-secondary/80 to-background" />
           <div className="mx-auto max-w-5xl text-center">
-            <div className="mx-auto mb-3 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-3 py-1.5 text-[11px] font-bold text-primary md:text-xs"><Sparkles className="size-3.5" />Informação transforma medo em escolha</div>
-            <h1 className="mx-auto max-w-4xl text-3xl font-extrabold leading-tight text-plum md:text-4xl lg:text-5xl">Prepare-se para viver o nascimento do seu bebê com mais consciência, confiança e protagonismo</h1>
-            <p className="mx-auto mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground md:text-base">Da gestação ao pós-parto: entenda o trabalho de parto, conheça seus direitos e prepare um acompanhante verdadeiramente ativo.</p>
-            <div className="relative mx-auto mt-5 aspect-video w-full max-w-3xl overflow-hidden rounded-2xl border-4 border-background bg-plum shadow-2xl">
+            <div className="mx-auto mb-2 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-3 py-1 text-[11px] font-bold text-primary"><Sparkles className="size-3.5" />Informação transforma medo em escolha</div>
+            <h1 className="mx-auto max-w-4xl text-3xl font-extrabold leading-tight text-plum lg:text-4xl">Prepare-se para viver o nascimento do seu bebê com mais consciência, confiança e protagonismo</h1>
+            <p className="mx-auto mt-2 max-w-3xl text-sm leading-relaxed text-muted-foreground">Da gestação ao pós-parto: entenda o trabalho de parto, conheça seus direitos e prepare um acompanhante verdadeiramente ativo.</p>
+            <div className="relative mx-auto mt-3 aspect-video w-full max-w-[38rem] overflow-hidden rounded-2xl border-4 border-background bg-plum shadow-2xl">
               <vturb-smartplayer id="vid-6a288cff68519b4d1b50bf92" className="block h-full w-full" />
               {!videoReady && <div className="absolute inset-0 grid place-items-center bg-plum text-primary-foreground"><div className="text-center"><span className="mx-auto grid size-20 place-items-center rounded-full bg-accent shadow-lg"><Play className="ml-1 size-8 fill-current" /></span><p className="mt-4 text-sm font-semibold">O vídeo está carregando...</p></div></div>}
             </div>
@@ -194,10 +196,8 @@ function Index() {
           </div><p className="mt-5 text-center text-xs text-muted-foreground">*Parcelamento com acréscimo da plataforma. Consulte as condições no checkout.</p>
         </div></section>
 
-        <section className="bg-secondary px-4 py-16 md:px-8 md:py-24"><div className="mx-auto max-w-7xl"><SectionTitle eyebrow="Histórias de transformação" title="Mais presença, clareza e confiança para o grande dia" />
-          <div className="hidden gap-5 md:grid md:grid-cols-3">{testimonials.map(([name,quote]) => <Testimonial key={name} name={name} quote={quote} />)}</div>
-          <div className="md:hidden"><Testimonial name={testimonials[testimonial]?.[0] ?? ""} quote={testimonials[testimonial]?.[1] ?? ""} /><div className="mt-5 flex justify-center gap-3"><Button variant="outline" size="icon" className="rounded-full" onClick={() => setTestimonial((testimonial + 2) % 3)} aria-label="Depoimento anterior"><ChevronLeft /></Button><Button variant="outline" size="icon" className="rounded-full" onClick={() => setTestimonial((testimonial + 1) % 3)} aria-label="Próximo depoimento"><ChevronRight /></Button></div></div>
-          <p className="mt-6 text-center text-xs text-muted-foreground">Relatos ilustrativos da transformação proporcionada pela preparação; substitua por depoimentos autorizados antes da publicação.</p>
+        <section className="bg-secondary px-4 py-16 md:px-8 md:py-24"><div className="mx-auto max-w-7xl"><SectionTitle eyebrow="Histórias de transformação" title="Depoimentos reais de quem se preparou para esse momento" />
+          <div className="columns-2 gap-3 md:columns-3 md:gap-6">{testimonials.map((image, index) => <figure key={image.asset_id} className="mb-3 break-inside-avoid overflow-hidden rounded-lg bg-background shadow-sm md:mb-6"><img src={image.url} alt={`Depoimento real de aluna do O Poder do Parto ${index + 1}`} loading="lazy" className="h-auto w-full" /></figure>)}</div>
         </div></section>
 
         <section id="mari" className="px-4 py-16 md:px-8 md:py-24"><div className="mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-[0.8fr_1.2fr] md:gap-16">
@@ -226,10 +226,6 @@ function Index() {
 function PlanCard({ plan, featured = false, onChoose }: { plan: "essential" | "complete"; featured?: boolean; onChoose: () => void }) {
   const data = offerConfig[plan];
   return <article className={`relative flex flex-col rounded-2xl border-2 p-7 md:p-9 ${featured ? "border-primary bg-plum text-primary-foreground shadow-2xl" : "border-border bg-card"}`}>{featured && <span className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-warm px-4 py-2 text-xs font-extrabold text-plum">{offerConfig.complete.tag}</span>}<p className={`text-sm font-bold ${featured ? "text-warm" : "text-primary"}`}>{plan === "complete" ? "CURSO + SUPORTE DIRETO" : "CURSO COMPLETO"}</p><h3 className="mt-2 text-2xl font-extrabold">{data.name}</h3><div className="mt-7"><span className="text-sm">R$</span> <span className="text-5xl font-extrabold">{data.price}</span> <span className="text-sm">à vista</span><p className="mt-1 font-semibold">ou {data.installments}</p></div><div className="my-7 h-px bg-current opacity-15" /><ul className="flex-1 space-y-4">{data.features.map(feature => <li key={feature} className="flex gap-3 text-sm leading-relaxed"><Check className={`mt-0.5 size-5 shrink-0 ${featured ? "text-warm" : "text-primary"}`} />{feature}</li>)}</ul><Button onClick={onChoose} variant={featured ? "default" : "outline"} className={`mt-8 min-h-14 rounded-2xl font-extrabold ${featured ? "bg-accent text-primary-foreground hover:bg-accent/90" : "border-primary text-primary hover:bg-secondary"}`}>{featured ? "QUERO O PLANO COMPLETO" : "QUERO O PLANO ESSENCIAL"}</Button></article>;
-}
-
-function Testimonial({ name, quote }: { name: string; quote: string }) {
-  return <blockquote className="h-full rounded-2xl border bg-background p-7"><div className="text-xl text-warm">★★★★★</div><p className="mt-5 leading-relaxed text-foreground">“{quote}”</p><footer className="mt-6 text-sm font-extrabold text-primary">{name}</footer></blockquote>;
 }
 
 declare module "react" {
