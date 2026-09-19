@@ -31,6 +31,9 @@ import testimonial6 from "@/assets/testimonials/testimonial-6.jpg.asset.json";
 import testimonial7 from "@/assets/testimonials/testimonial-7.jpg.asset.json";
 import testimonial8 from "@/assets/testimonials/testimonial-8.jpg.asset.json";
 import testimonial9 from "@/assets/testimonials/testimonial-9.jpg.asset.json";
+import videoPoster from "@/assets/video-poster.webp.asset.json";
+
+const VIDEO_SCRIPT_URL = "https://scripts.converteai.net/639563c1-cf70-4484-8d65-6fd485e96ab9/players/6a288cff68519b4d1b50bf92/v4/player.js";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -42,6 +45,7 @@ export const Route = createFileRoute("/")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "preload", as: "image", href: videoPoster.url, fetchPriority: "high" }],
   }),
   component: Index,
 });
@@ -100,17 +104,45 @@ function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [upgradeOpen, setUpgradeOpen] = useState(false);
   const [orderBumpOpen, setOrderBumpOpen] = useState(false);
-  const [videoReady, setVideoReady] = useState(false);
+  const [videoStatus, setVideoStatus] = useState<"idle" | "loading" | "ready" | "error">("idle");
+  const [slowConnection, setSlowConnection] = useState(false);
 
   useEffect(() => {
     trackEvent("page_view", { page_path: window.location.pathname });
-    const script = document.createElement("script");
-    script.src = "https://scripts.converteai.net/639563c1-cf70-4484-8d65-6fd485e96ab9/players/6a288cff68519b4d1b50bf92/v4/player.js";
-    script.async = true;
-    script.onload = () => setVideoReady(true);
-    document.head.appendChild(script);
-    return () => script.remove();
+    const connection = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
+    setSlowConnection(Boolean(connection?.saveData || connection?.effectiveType?.includes("2g")));
   }, []);
+
+  const loadVideo = () => {
+    if (videoStatus === "loading" || videoStatus === "ready") return;
+    setVideoStatus("loading");
+    trackEvent("video_load_requested", { connection: slowConnection ? "slow_or_data_saver" : "standard" });
+
+    const finishLoading = () => {
+      window.customElements.whenDefined("vturb-smartplayer").then(() => setVideoStatus("ready"));
+    };
+    if (window.customElements.get("vturb-smartplayer")) {
+      setVideoStatus("ready");
+      return;
+    }
+
+    const existingScript = document.querySelector<HTMLScriptElement>(`script[src="${VIDEO_SCRIPT_URL}"]`);
+    if (existingScript) {
+      existingScript.addEventListener("load", finishLoading, { once: true });
+      existingScript.addEventListener("error", () => setVideoStatus("error"), { once: true });
+    } else {
+      const script = document.createElement("script");
+      script.src = VIDEO_SCRIPT_URL;
+      script.async = true;
+      script.onload = finishLoading;
+      script.onerror = () => setVideoStatus("error");
+      document.head.appendChild(script);
+    }
+
+    window.setTimeout(() => {
+      if (!window.customElements.get("vturb-smartplayer")) setVideoStatus("error");
+    }, 15000);
+  };
 
   const scrollToOffers = (location: string) => {
     trackEvent("cta_click", { location });
@@ -154,8 +186,19 @@ function Index() {
             <h1 className="mx-auto max-w-4xl text-3xl font-extrabold leading-tight text-plum lg:text-4xl">Prepare-se para viver o nascimento do seu bebê com mais consciência, confiança e protagonismo</h1>
             <p className="mx-auto mt-2 max-w-3xl text-sm leading-relaxed text-muted-foreground">Da gestação ao pós-parto: entenda o trabalho de parto, conheça seus direitos e prepare um acompanhante verdadeiramente ativo.</p>
             <div className="relative mx-auto mt-3 aspect-video w-full max-w-[38rem] overflow-hidden rounded-2xl border-4 border-background bg-plum shadow-2xl">
-              <vturb-smartplayer id="vid-6a288cff68519b4d1b50bf92" className="block h-full w-full" />
-              {!videoReady && <div className="absolute inset-0 grid place-items-center bg-plum text-primary-foreground"><div className="text-center"><span className="mx-auto grid size-20 place-items-center rounded-full bg-accent shadow-lg"><Play className="ml-1 size-8 fill-current" /></span><p className="mt-4 text-sm font-semibold">O vídeo está carregando...</p></div></div>}
+              {videoStatus !== "idle" && <vturb-smartplayer id="vid-6a288cff68519b4d1b50bf92" className="block h-full w-full" />}
+              {videoStatus !== "ready" && <div className="absolute inset-0 bg-plum text-primary-foreground">
+                <img src={videoPoster.url} alt="Mariana Betioli apresentando O Poder do Parto" width={640} height={360} fetchPriority="high" className="h-full w-full object-cover" />
+                <div className="absolute inset-0 bg-foreground/25" />
+                <div className="absolute inset-0 grid place-items-center px-4">
+                  {videoStatus === "loading" ? <div className="text-center" role="status" aria-live="polite"><span className="mx-auto block size-10 animate-spin rounded-full border-4 border-primary-foreground/40 border-t-primary-foreground" /><p className="mt-3 text-sm font-bold">Preparando o vídeo...</p></div> : <Button type="button" variant="ghost" onClick={loadVideo} aria-label={videoStatus === "error" ? "Tentar carregar o vídeo novamente" : "Reproduzir vídeo: O Poder do Parto"} className="h-auto flex-col gap-2 rounded-xl p-3 text-primary-foreground hover:bg-foreground/20 hover:text-primary-foreground">
+                    <span className="grid size-16 place-items-center rounded-full bg-accent shadow-lg"><Play className="ml-1 size-7 fill-current" /></span>
+                    <span className="text-sm font-extrabold">{videoStatus === "error" ? "Tentar novamente" : "Assistir ao vídeo"}</span>
+                  </Button>}
+                </div>
+                {slowConnection && videoStatus === "idle" && <p className="absolute inset-x-3 bottom-2 text-center text-[11px] font-semibold drop-shadow">Modo econômico: o vídeo só será carregado ao tocar em assistir.</p>}
+                {videoStatus === "error" && <p className="absolute inset-x-3 bottom-2 text-center text-[11px] font-semibold drop-shadow">A conexão está lenta. A capa permanece disponível enquanto você tenta novamente.</p>}
+              </div>}
             </div>
             <Button onClick={() => scrollToOffers("hero")} className="mt-6 min-h-14 w-full rounded-2xl bg-accent px-6 text-sm font-extrabold shadow-xl hover:bg-accent/90 sm:w-auto sm:text-base">QUERO ME PREPARAR PARA O MEU PARTO <ArrowRight /></Button>
             <p className="mt-4 text-sm font-semibold text-muted-foreground">Acesso vitalício • Garantia de 7 dias • No seu próprio ritmo</p>
