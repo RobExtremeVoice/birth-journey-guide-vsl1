@@ -17,7 +17,7 @@ export const offerConfig = {
     tag: "MAIS RECOMENDADO",
     price: 397,
     installments: "em até 12x no cartão*",
-    checkoutUrl: "https://pay.hotmart.com/X88395451D",
+    checkoutUrl: "https://pay.hotmart.com/X88395451D?off=7skbnr37",
     features: [
       "Tudo do Plano Essencial (9 módulos + 7 bônus)",
       "Meu WhatsApp: Comunicação Direta com a Mariana Betioli",
@@ -32,7 +32,7 @@ export const offerConfig = {
     differencePrice: 50,
     totalPrice: 347,
     installments: "em até 12x no cartão*",
-    upgradeCheckoutUrl: "https://pay.hotmart.com/X88395451D",
+    upgradeCheckoutUrl: "https://pay.hotmart.com/X88395451D?off=7skbnr37",
     includedBenefit:
       "Acesso Direto ao WhatsApp exclusivo da Mariana Betioli para tirar dúvidas durante a gestação",
   },
