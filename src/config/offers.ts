@@ -32,7 +32,7 @@ export const offerConfig = {
     differencePrice: 50,
     totalPrice: 347,
     installments: "em até 12x no cartão*",
-    upgradeCheckoutUrl: "https://pay.hotmart.com/X88395451D",
+    upgradeCheckoutUrl: "https://pay.hotmart.com/X88395451D?off=7skbnr37",
     includedBenefit:
       "Acesso Direto ao WhatsApp exclusivo da Mariana Betioli para tirar dúvidas durante a gestação",
   },
