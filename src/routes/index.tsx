@@ -232,8 +232,8 @@ function Index() {
           <div className="absolute inset-x-0 top-0 -z-10 h-3/4 bg-gradient-to-b from-secondary/80 to-background" />
           <div className="mx-auto max-w-5xl text-center">
             <div className="mx-auto mb-2 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-3 py-1 text-[11px] font-bold text-primary"><Sparkles className="size-3.5" />Informação transforma medo em escolha</div>
-            <h1 className="mx-auto max-w-4xl text-3xl font-extrabold leading-tight text-plum lg:text-4xl">Prepare-se para viver o nascimento do seu bebê com mais consciência, confiança e protagonismo</h1>
-            <p className="mx-auto mt-2 max-w-3xl text-sm leading-relaxed text-muted-foreground">Da gestação ao pós-parto: entenda o trabalho de parto, conheça seus direitos e prepare um acompanhante verdadeiramente ativo.</p>
+            <h1 className="mx-auto max-w-4xl text-[1.6rem] font-extrabold leading-[1.15] text-plum sm:text-3xl lg:text-4xl">Prepare-se para viver o nascimento do seu bebê com mais consciência, confiança e protagonismo</h1>
+            <p className="mx-auto mt-2 max-w-3xl text-[0.8rem] leading-relaxed text-muted-foreground sm:text-sm">Da gestação ao pós-parto: entenda o trabalho de parto, conheça seus direitos e prepare um acompanhante verdadeiramente ativo.</p>
             <div className="relative mx-auto mt-3 aspect-video w-full max-w-[38rem] overflow-hidden rounded-2xl border-4 border-background bg-plum shadow-2xl">
               {videoStatus !== "idle" && <vturb-smartplayer id="vid-6a288cff68519b4d1b50bf92" className="block h-full w-full" />}
               {videoStatus !== "ready" && <div className="absolute inset-0 bg-plum text-primary-foreground">
@@ -256,7 +256,7 @@ function Index() {
 
         <section data-reveal className="bg-plum px-4 py-16 text-primary-foreground md:px-8 md:py-24">
           <div className="mx-auto max-w-7xl"><SectionTitle light eyebrow="Você não está sozinha" title="Você deseja viver esse momento com mais segurança e menos medo?" text="É comum sentir insegurança diante do desconhecido. Preparação não é controlar o parto — é chegar com recursos para compreender, perguntar e participar." />
-            <div className="grid gap-3 md:grid-cols-5">{painPoints.map((item, i) => <div key={item} className="rounded-2xl border border-primary-foreground/15 bg-primary-foreground/8 p-5"><span className="mb-5 block text-3xl font-extrabold text-warm">0{i + 1}</span><p className="font-semibold leading-relaxed">{item}</p></div>)}</div>
+            <div className="grid gap-3 md:grid-cols-5">{painPoints.map((item, i) => <div key={item} className="rounded-2xl border border-primary-foreground/15 bg-primary-foreground/8 p-4 transition-colors hover:bg-primary-foreground/15 md:p-5"><span className="mb-2 block text-3xl font-extrabold text-warm md:mb-5">0{i + 1}</span><p className="font-semibold leading-relaxed">{item}</p></div>)}</div>
           </div>
         </section>
 
@@ -273,7 +273,7 @@ function Index() {
         </div></section>
 
         <section data-reveal id="modulos" className="bg-muted px-4 py-16 md:px-8 md:py-24"><div className="mx-auto max-w-7xl"><SectionTitle eyebrow="Por dentro do curso" title="Uma preparação completa, passo a passo" />
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{modules.map(([number,title,description,image]) => <article key={number} className="overflow-hidden rounded-lg border bg-card shadow-sm"><div className="aspect-video w-full overflow-hidden bg-secondary"><img src={image} alt={`Capa do ${number}: ${title}`} width={1024} height={576} loading="lazy" decoding="async" className="h-full w-full object-contain" /></div><div className="p-4 md:p-5"><span className="text-xs font-bold uppercase text-primary">{number}</span><h3 className="mt-1 text-lg font-extrabold text-plum">{title}</h3><p className="mt-2 text-sm leading-relaxed text-muted-foreground">{description}</p></div></article>)}</div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{modules.map(([number,title,description,image]) => <article key={number} className="group overflow-hidden rounded-lg border bg-card shadow-sm transition-shadow duration-300 hover:shadow-lg"><div className="aspect-video w-full overflow-hidden bg-secondary"><img src={image} alt={`Capa do ${number}: ${title}`} width={1024} height={576} loading="lazy" decoding="async" className="h-full w-full object-contain" /></div><div className="p-4 md:p-5"><span className="text-xs font-bold uppercase text-primary">{number}</span><h3 className="mt-1 text-lg font-extrabold text-plum">{title}</h3><p className="mt-2 text-sm leading-relaxed text-muted-foreground">{description}</p></div></article>)}</div>
         </div></section>
 
         <section data-reveal id="bonus" className="bg-plum px-4 py-16 text-primary-foreground md:px-8 md:py-24"><div className="mx-auto max-w-7xl"><SectionTitle light eyebrow="Bônus incríveis" title="Recursos extras para você se sentir ainda mais segura" />
