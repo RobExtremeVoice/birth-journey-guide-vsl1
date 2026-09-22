@@ -121,16 +121,47 @@ function Brand({ light = false }: { light?: boolean }) {
 }
 
 function Index() {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [upgradeOpen, setUpgradeOpen] = useState(false);
   const [orderBumpOpen, setOrderBumpOpen] = useState(false);
   const [videoStatus, setVideoStatus] = useState<"idle" | "loading" | "ready" | "error">("idle");
   const [slowConnection, setSlowConnection] = useState(false);
+  const [showStickyCta, setShowStickyCta] = useState(false);
 
   useEffect(() => {
     trackEvent("page_view", { page_path: window.location.pathname });
     const connection = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
     setSlowConnection(Boolean(connection?.saveData || connection?.effectiveType?.includes("2g")));
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => setShowStickyCta(window.scrollY > 520);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const targets = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
+    if (!("IntersectionObserver" in window)) {
+      targets.forEach((el) => el.classList.add("is-visible"));
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
+    );
+    targets.forEach((el) => {
+      el.classList.add("reveal");
+      observer.observe(el);
+    });
+    return () => observer.disconnect();
   }, []);
 
   const loadVideo = () => {
@@ -166,8 +197,7 @@ function Index() {
 
   const scrollToOffers = (location: string) => {
     trackEvent("cta_click", { location });
-    document.getElementById("ofertas")?.scrollIntoView({ behavior: "smooth" });
-    setMenuOpen(false);
+    document.getElementById("ofertas")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   const chooseEssential = () => {
@@ -187,14 +217,14 @@ function Index() {
     <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
       <div className="bg-plum px-4 py-2 text-center text-xs font-semibold text-primary-foreground sm:text-sm">Preparação completa para gestantes e seus acompanhantes • SUS e Particular</div>
       <header className="sticky top-0 z-40 border-b border-border/70 bg-background/95 backdrop-blur">
-        <div className="mx-auto grid h-16 max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-4 md:h-20 md:px-8">
+        <div className="mx-auto grid h-16 max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 md:h-20 md:px-8">
           <Brand />
-          <nav className="hidden items-center gap-7 text-sm font-semibold lg:flex" aria-label="Navegação principal">
-            <Button className="h-11 rounded-full px-6 font-bold" onClick={() => scrollToOffers("navbar")}>Garantir vaga <ArrowRight /></Button>
-          </nav>
-          <Button variant="ghost" size="icon" className="size-11 lg:hidden" onClick={() => setMenuOpen(!menuOpen)} aria-label="Abrir menu">{menuOpen ? <X /> : <Menu />}</Button>
+          <Button className="h-11 shrink-0 rounded-full px-4 text-xs font-bold sm:px-6 sm:text-sm" onClick={() => scrollToOffers("navbar")}>
+            <span className="hidden sm:inline">Garantir vaga</span>
+            <span className="sm:hidden">Quero me preparar</span>
+            <ArrowRight />
+          </Button>
         </div>
-        {menuOpen && <nav className="border-t bg-background px-4 py-5 lg:hidden"><Button className="mt-4 h-12 w-full rounded-full" onClick={() => scrollToOffers("mobile_nav")}>Garantir vaga</Button></nav>}
       </header>
 
       <main>
