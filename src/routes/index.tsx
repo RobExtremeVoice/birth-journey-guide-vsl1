@@ -191,12 +191,11 @@ function Index() {
         <div className="mx-auto grid h-16 max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-4 md:h-20 md:px-8">
           <Brand />
           <nav className="hidden items-center gap-7 text-sm font-semibold lg:flex" aria-label="Navegação principal">
-            {[['Módulos','modulos'],['Método','metodo'],['Bônus','bonus'],['Mari Betioli','mari']].map(([label,id]) => <a key={id} href={`#${id}`} className="hover:text-primary">{label}</a>)}
             <Button className="h-11 rounded-full px-6 font-bold" onClick={() => scrollToOffers("navbar")}>Garantir vaga <ArrowRight /></Button>
           </nav>
           <Button variant="ghost" size="icon" className="size-11 lg:hidden" onClick={() => setMenuOpen(!menuOpen)} aria-label="Abrir menu">{menuOpen ? <X /> : <Menu />}</Button>
         </div>
-        {menuOpen && <nav className="border-t bg-background px-4 py-5 lg:hidden">{[['Módulos','modulos'],['Método','metodo'],['Bônus','bonus'],['Mari Betioli','mari']].map(([label,id]) => <a key={id} href={`#${id}`} onClick={() => setMenuOpen(false)} className="block border-b py-3 font-semibold">{label}</a>)}<Button className="mt-4 h-12 w-full rounded-full" onClick={() => scrollToOffers("mobile_nav")}>Garantir vaga</Button></nav>}
+        {menuOpen && <nav className="border-t bg-background px-4 py-5 lg:hidden"><Button className="mt-4 h-12 w-full rounded-full" onClick={() => scrollToOffers("mobile_nav")}>Garantir vaga</Button></nav>}
       </header>
 
       <main>
