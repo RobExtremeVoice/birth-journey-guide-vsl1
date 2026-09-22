@@ -7,7 +7,6 @@ import {
   Check,
   CircleCheck,
   HeartHandshake,
-  Menu,
   MessageCircleHeart,
   Play,
   ShieldCheck,
