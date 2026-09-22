@@ -32,6 +32,20 @@ import testimonial7 from "@/assets/testimonials/testimonial-7.jpg.asset.json";
 import testimonial8 from "@/assets/testimonials/testimonial-8.jpg.asset.json";
 import testimonial9 from "@/assets/testimonials/testimonial-9.jpg.asset.json";
 import videoPoster from "@/assets/video-poster.webp.asset.json";
+import module1 from "@/assets/course/modulo-1.jpg.asset.json";
+import module2 from "@/assets/course/modulo-2.jpg.asset.json";
+import module3 from "@/assets/course/modulo-3.jpg.asset.json";
+import module4 from "@/assets/course/modulo-4.jpg.asset.json";
+import module6 from "@/assets/course/modulo-6.jpg.asset.json";
+import module7 from "@/assets/course/modulo-7.jpg.asset.json";
+import module8 from "@/assets/course/modulo-8.jpg.asset.json";
+import bonus1 from "@/assets/course/bonus-1.jpg.asset.json";
+import bonus2 from "@/assets/course/bonus-2.jpg.asset.json";
+import bonus3 from "@/assets/course/bonus-3.jpg.asset.json";
+import bonus4 from "@/assets/course/bonus-4.jpg.asset.json";
+import bonus5 from "@/assets/course/bonus-5.jpg.asset.json";
+import bonus6 from "@/assets/course/bonus-6.jpg.asset.json";
+import bonus7 from "@/assets/course/bonus-7.jpg.asset.json";
 
 const VIDEO_SCRIPT_URL = "https://scripts.converteai.net/639563c1-cf70-4484-8d65-6fd485e96ab9/players/6a288cff68519b4d1b50bf92/v4/player.js";
 
@@ -50,26 +64,25 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const modules: Array<[string, string, string]> = [
-  ["01", "A jornada começa na gestação", "Como preparar corpo, mente e ambiente para as escolhas que virão."],
-  ["02", "Fisiologia do parto", "Entenda hormônios, posições e os sinais naturais do corpo."],
-  ["03", "Trabalho de parto", "Fases, contrações e o momento mais seguro de ir à maternidade."],
-  ["04", "Alívio da dor", "Recursos não farmacológicos, respiração, movimento e conforto."],
-  ["05", "Acompanhante ativo", "Como oferecer apoio emocional e prático em cada etapa."],
-  ["06", "Intervenções e escolhas", "Informação para conversar com clareza sobre condutas e alternativas."],
-  ["07", "Direitos e plano de parto", "Como construir preferências e dialogar com a equipe de saúde."],
-  ["08", "Nascimento e primeiras horas", "Contato pele a pele, primeiros cuidados e acolhimento do bebê."],
-  ["09", "Pós-parto e amamentação", "Uma preparação realista para o puerpério e os primeiros dias."],
-];
+const modules = [
+  ["Módulo 1", "Primeiros Passos", "Entenda tudo sobre a jornada que está começando.", module1.url],
+  ["Módulo 2", "A Realidade do Parto", "Descubra como funciona o sistema e garanta um parto respeitoso.", module2.url],
+  ["Módulo 3", "Preparo Emocional", "Trabalhe o medo, a ansiedade e fortaleça sua confiança.", module3.url],
+  ["Módulo 4", "Como Funciona o Parto", "Identifique e saiba o que fazer em cada fase do trabalho de parto.", module4.url],
+  ["Módulo 5", "O Corpo na Gravidez", "Cuide de si e prepare-se fisicamente para o parto.", module4.url],
+  ["Módulo 6", "Indução & Cesárea", "Entenda indicações, intervenções e parto normal após cesárea.", module6.url],
+  ["Módulo 7", "Técnicas de Alívio da Dor", "Respiração, massagem, acupressão e outros métodos naturais.", module7.url],
+  ["Módulo 8", "Plano de Parto", "Crie um plano de parto que funciona e seja respeitado.", module8.url],
+] as const;
 
-const bonuses: Array<[string, string, string]> = [
-  ["Guia prático", "Quando ir à maternidade", "Um checklist objetivo para reconhecer sinais e organizar a saída."],
-  ["Áudios guiados", "Respiração e relaxamento", "Práticas curtas para treinar durante a gestação e usar no trabalho de parto."],
-  ["Modelo editável", "Plano de parto", "Estrutura para registrar preferências e facilitar o diálogo com a equipe."],
-  ["Checklist", "Mala da maternidade", "O essencial para gestante, bebê e acompanhante, sem excessos."],
-  ["Guia do acompanhante", "Presença que faz diferença", "Orientações para apoio físico, emocional e comunicação."],
-  ["Material de apoio", "Direitos da parturiente", "Referências práticas para conhecer direitos e fazer perguntas melhores."],
-  ["Aula especial", "Primeiras horas com o bebê", "Acolhimento, vínculo e decisões comuns logo após o nascimento."],
+const bonuses = [
+  ["Bônus 1", "Posições para encaixar o bebê", bonus1.url],
+  ["Bônus 2", "Massagem com convidada especialista", bonus2.url],
+  ["Bônus 3", "Preparando o seu acompanhante", bonus3.url],
+  ["Bônus 4", "Comunidade no WhatsApp", bonus4.url],
+  ["Bônus 5", "O pós-parto", bonus5.url],
+  ["Bônus 6", "Respiração na gravidez e no parto", bonus6.url],
+  ["Bônus 7", "10 ensinamentos para o bebê dormir melhor", bonus7.url],
 ];
 
 const painPoints = [
@@ -231,13 +244,12 @@ function Index() {
           <div className="grid gap-5 md:grid-cols-3">{[[BookOpen,"Conhecimento fisiológico e científico","Entenda o que acontece no corpo e reconheça as fases do nascimento."],[HeartHandshake,"Preparação prática","Corpo, mente, alívio da dor e plano de parto em ferramentas aplicáveis."],[MessageCircleHeart,"Protagonismo e diálogo","Construa perguntas, preferências e conversas mais conscientes com sua equipe."]].map(([Icon,title,text],i) => { const IconComponent = Icon as typeof BookOpen; return <article key={String(title)} className="rounded-2xl border bg-background p-7"><div className="mb-7 grid size-14 place-items-center rounded-2xl bg-secondary text-primary"><IconComponent className="size-7" /></div><span className="text-xs font-bold text-warm">PILAR {i+1}</span><h3 className="mt-2 text-xl font-extrabold text-plum">{String(title)}</h3><p className="mt-3 leading-relaxed text-muted-foreground">{String(text)}</p></article>})}</div>
         </div></section>
 
-        <section id="modulos" className="px-4 py-16 md:px-8 md:py-24"><div className="mx-auto max-w-7xl"><SectionTitle eyebrow="Por dentro do curso" title="9 módulos, mais de 70 aulas, uma jornada completa" text="Conteúdo direto e acolhedor para assistir no seu ritmo, desde a gestação até os primeiros dias com o bebê." />
-          <div className="md:hidden"><Accordion type="single" collapsible className="rounded-2xl border bg-card px-5">{modules.map(([n,t,d]) => <AccordionItem key={n} value={n}><AccordionTrigger className="text-left text-base font-bold text-plum"><span className="mr-3 text-primary">{n}</span>{t}</AccordionTrigger><AccordionContent className="pl-9 leading-relaxed text-muted-foreground">{d}</AccordionContent></AccordionItem>)}</Accordion></div>
-          <div className="hidden grid-cols-3 gap-4 md:grid">{modules.map(([n,t,d]) => <article key={n} className="rounded-2xl border bg-card p-6 transition-transform hover:-translate-y-1"><span className="text-3xl font-extrabold text-secondary-foreground">{n}</span><h3 className="mt-5 text-lg font-bold text-plum">{t}</h3><p className="mt-2 text-sm leading-relaxed text-muted-foreground">{d}</p></article>)}</div>
+        <section id="modulos" className="bg-muted px-4 py-16 md:px-8 md:py-24"><div className="mx-auto max-w-7xl"><SectionTitle eyebrow="Por dentro do curso" title="Uma preparação completa, passo a passo" />
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{modules.map(([number,title,description,image]) => <article key={number} className="overflow-hidden rounded-lg border bg-card shadow-sm"><div className="aspect-video w-full overflow-hidden bg-secondary"><img src={image} alt={`Capa do ${number}: ${title}`} width={1024} height={576} loading="lazy" decoding="async" className="h-full w-full object-contain" /></div><div className="p-4 md:p-5"><span className="text-xs font-bold uppercase text-primary">{number}</span><h3 className="mt-1 text-lg font-extrabold text-plum">{title}</h3><p className="mt-2 text-sm leading-relaxed text-muted-foreground">{description}</p></div></article>)}</div>
         </div></section>
 
-        <section id="bonus" className="bg-plum px-4 py-16 text-primary-foreground md:px-8 md:py-24"><div className="mx-auto max-w-7xl"><SectionTitle light eyebrow="Ainda tem mais" title="7 bônus para levar o conteúdo à prática" />
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{bonuses.map(([tag,title,text],i) => <article key={title} className={`rounded-2xl border border-primary-foreground/15 bg-primary-foreground/8 p-6 ${i === 6 ? "lg:col-span-2" : ""}`}><span className="inline-flex rounded-full bg-warm px-3 py-1 text-[10px] font-extrabold text-plum">BÔNUS INCLUÍDO</span><p className="mt-5 text-xs font-bold uppercase text-warm-soft">{tag}</p><h3 className="mt-2 text-lg font-extrabold">{title}</h3><p className="mt-3 text-sm leading-relaxed text-primary-foreground/75">{text}</p></article>)}</div>
+        <section id="bonus" className="bg-plum px-4 py-16 text-primary-foreground md:px-8 md:py-24"><div className="mx-auto max-w-7xl"><SectionTitle light eyebrow="Bônus incríveis" title="Recursos extras para você se sentir ainda mais segura" />
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">{bonuses.map(([number,title,image]) => <article key={number} className="overflow-hidden rounded-lg bg-primary-foreground/10"><div className="aspect-video w-full overflow-hidden bg-primary-foreground/10"><img src={image} alt={`Capa do ${number}: ${title}`} width={1600} height={900} loading="lazy" decoding="async" className="h-full w-full object-contain" /></div><div className="p-3 text-center md:p-4"><p className="text-xs font-bold uppercase text-primary-foreground/90">{number}</p><h3 className="mt-1 text-sm font-bold leading-snug md:text-base">{title}</h3></div></article>)}</div>
         </div></section>
 
         <section className="bg-secondary px-4 py-16 md:px-8 md:py-24"><div className="mx-auto max-w-7xl"><SectionTitle eyebrow="Histórias de transformação" title="Depoimentos reais de quem se preparou para esse momento" />
